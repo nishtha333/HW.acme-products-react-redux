@@ -1,3 +1,4 @@
+const faker = require('faker');
 const db = require('../db');
 const { Products } = db.models;
 const express = require('express');
@@ -12,7 +13,7 @@ router.get('/', (req, res, next) => {
 });
 
 router.post('/', (req, res, next) => {
-    Products.create(req.body)
+    Products.create({ name: faker.commerce.product(), rating: faker.random.number(10) })
         .then(product => res.send(product))
         .catch(next);
 });

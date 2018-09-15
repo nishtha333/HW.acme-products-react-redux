@@ -1,4 +1,5 @@
 import React, {Component} from 'react'
+import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { getProducts } from './store'
 
@@ -10,10 +11,15 @@ class Nav extends Component {
 
     render () {
         const { products, topRatedProduct } = this.props
+
         return (
             <ul>
-                <li>Products ({products.length})</li>
-                <li>Top Rated ({topRatedProduct.name})</li>
+                <li>
+                    <Link to="/products">Products ({products.length})</Link>
+                </li>
+                <li>
+                    <Link to={`/products/${topRatedProduct.id}`}>Top Rated ({topRatedProduct.name})</Link>
+                </li>
             </ul>
         )
     }
