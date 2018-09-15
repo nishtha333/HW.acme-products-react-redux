@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
-const conn = new Sequelize(process.env.DATABASE_URL);
+const conn = new Sequelize(process.env.DATABASE_URL, { logging: false });
 
-const Product = conn.define('product', {
+const Products = conn.define('product', {
     name: {
         type: Sequelize.STRING,
         unique: true,
@@ -21,9 +21,9 @@ const sync = () => {
 
 const seed = () => {
     return Promise.all([
-        Product.create({ name: "Apple iPhone", rating: 7 }),
-        Product.create({ name: "Google Pixel", rating: 9 }),
-        Product.create({ name: "Amazon Echo", rating: 8 })
+        Products.create({ name: "Apple iPhone", rating: 7 }),
+        Products.create({ name: "Google Pixel", rating: 9 }),
+        Products.create({ name: "Amazon Echo", rating: 8 })
     ]);
 }
 
@@ -31,6 +31,6 @@ module.exports = {
     sync,
     seed,
     models: {
-        Product
+        Products
     }
 }
