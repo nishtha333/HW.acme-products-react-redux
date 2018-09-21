@@ -6,28 +6,33 @@ import { deleteProduct } from './store'
 class Product extends Component {
 
     render() {
-
-        const { products, match, deleteProduct } = this.props
-        const product = products.find(product => product.id === Number(this.props.match.params.id))
+        const { product, deleteProduct } = this.props
+        if(!product) {
+            return null
+        }
 
         return (
             <div>
                 {product.name} 
-                <button onClick={() => deleteProduct(match.params.id)}>X</button>
+                <button onClick={() => deleteProduct(product.id)}>X</button>
             </div>
         )
     }
 }
 
-const mapStateToProps = (state) => {
+/*Second parameter has props that are sent to component (other than by store)
+Use them here and have all logic in map function */
+const mapStateToProps = ({ products }, { match }) => {
+    const id = match.params.id
     return {
-        products: state.products
+        product: products.find(product => product.id === Number(id))
     }
 }
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch, { history }) => {
+
     return {
-        deleteProduct: (id) => dispatch(deleteProduct(id))
+        deleteProduct: (id) => dispatch(deleteProduct(id, history))
     }
 }
 

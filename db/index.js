@@ -1,6 +1,11 @@
 const Sequelize = require('sequelize');
 const conn = new Sequelize(process.env.DATABASE_URL, { logging: false });
 
+/* See Prof's notes: Broken down into multiple files:
+- conn.js: Sequelize connection
+- Product.js - Product Model
+- index.js: syncAndSeed and export model and that method
+*/
 const Products = conn.define('product', {
     name: {
         type: Sequelize.STRING,

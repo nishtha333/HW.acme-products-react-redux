@@ -1,13 +1,9 @@
 import React, {Component} from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import { getProducts } from './store'
+import { topRatedProduct } from './store'
 
 class Nav extends Component {
-
-    componentDidMount() {
-        this.props.getProducts()
-    }
 
     render () {
         const { products, topRatedProduct } = this.props
@@ -17,9 +13,13 @@ class Nav extends Component {
                 <li>
                     <Link to="/products">Products ({products.length})</Link>
                 </li>
-                <li>
-                    <Link to={`/products/${topRatedProduct.id}`}>Top Rated ({topRatedProduct.name})</Link>
-                </li>
+                {
+                    topRatedProduct ? (
+                        <li>
+                            <Link to={`/products/${topRatedProduct.id}`}>Top Rated ({topRatedProduct.name})</Link>
+                        </li>
+                    ) : null
+                }
             </ul>
         )
     }
@@ -28,14 +28,8 @@ class Nav extends Component {
 const mapStateToProps = (state) => {
     return {
         products: state.products,
-        topRatedProduct: state.topRatedProduct
+        topRatedProduct: topRatedProduct(state.products) //Prof's note: use selector for props derived from the state
     }
 }
 
-const mapDispatchToProps = (dispatch) => {
-    return {
-        getProducts: () => dispatch(getProducts())
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Nav)
+export default connect(mapStateToProps, null)(Nav)

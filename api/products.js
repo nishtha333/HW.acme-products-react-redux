@@ -6,15 +6,16 @@ const router = express.Router();
 
 module.exports = router;
 
+/* Prof's Notes: Return in desc order of rating */
 router.get('/', (req, res, next) => {
-    Products.findAll()
+    Products.findAll()  //Product.findAll({ order: [['rating', 'DESC']]})
         .then(products => res.send(products))
         .catch(next);
 });
 
 router.post('/', (req, res, next) => {
     Products.create({ name: faker.commerce.product(), rating: faker.random.number(10) })
-        .then(product => res.send(product))
+        .then(product => res.send(product)) //Prof's notes - Send status of 201 for post
         .catch(next);
 });
 
@@ -25,3 +26,4 @@ router.delete('/:id', (req, res, next) => {
         .catch(next);
 });
 
+/* Prof's Notes: Error Handling */
